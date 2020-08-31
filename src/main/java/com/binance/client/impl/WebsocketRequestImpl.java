@@ -476,7 +476,7 @@ class WebsocketRequestImpl {
                 accountUpdate.setBalances(balanceList);
 
                 List<PositionUpdate> positionList = new LinkedList<>();
-                JsonWrapperArray datalist = jsonWrapper.getJsonObject("a").getJsonArray("B");
+                JsonWrapperArray datalist = jsonWrapper.getJsonObject("a").getJsonArray("P");
                 datalist.forEach(item -> {
                     PositionUpdate position = new PositionUpdate();
                     position.setSymbol(item.getString("s"));
@@ -508,8 +508,8 @@ class WebsocketRequestImpl {
                 orderUpdate.setLastFilledQty(jsondata.getBigDecimal("l"));
                 orderUpdate.setCumulativeFilledQty(jsondata.getBigDecimal("z"));
                 orderUpdate.setLastFilledPrice(jsondata.getBigDecimal("L"));
-                orderUpdate.setCommissionAsset(jsondata.getString("N"));
-                orderUpdate.setCommissionAmount(jsondata.getLong("n"));
+                orderUpdate.setCommissionAsset(jsondata.getStringOrDefault("N", null));
+                orderUpdate.setCommissionAmount(jsondata.getBigDecimalOrDefault("n", null));
                 orderUpdate.setOrderTradeTime(jsondata.getLong("T"));
                 orderUpdate.setTradeID(jsondata.getLong("t"));
                 orderUpdate.setBidsNotional(jsondata.getBigDecimal("b"));
