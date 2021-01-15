@@ -35,8 +35,11 @@ abstract class RestApiInvoker {
                 int code = json.getInteger("code");
                 if (code != 200) {
                     String message = json.getStringOrDefault("msg", "");
-                    throw new BinanceApiException(BinanceApiException.EXEC_ERROR,
-                            "[Executing] " + code + ": " + message);
+                    throw new BinanceApiException(
+                            BinanceApiException.EXEC_ERROR,
+                            "[Executing] " + code + ": " + message,
+                            code
+                    );
                 }
             }
         } catch (BinanceApiException e) {
@@ -52,7 +55,6 @@ abstract class RestApiInvoker {
             String str;
             log.debug("Request URL " + request.request.url());
             Response response = client.newCall(request.request).execute();
-            // System.out.println(response.body().string());
             if (response != null && response.body() != null) {
                 str = response.body().string();
                 response.close();
