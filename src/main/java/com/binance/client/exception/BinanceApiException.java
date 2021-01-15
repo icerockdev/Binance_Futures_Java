@@ -13,19 +13,38 @@ public class BinanceApiException extends RuntimeException {
     public static final String SUBSCRIPTION_ERROR = "SubscriptionError";
     public static final String ENV_ERROR = "EnvironmentError";
     public static final String EXEC_ERROR = "ExecuteError";
-    private final String errCode;
+    private final Integer errCode;
+    private final String errType;
 
     public BinanceApiException(String errType, String errMsg) {
         super(errMsg);
-        this.errCode = errType;
+        this.errType = errType;
+        this.errCode = null;
+    }
+
+    public BinanceApiException(String errType, String errMsg, Integer errCode) {
+        super(errMsg);
+        this.errType = errType;
+        this.errCode = errCode;
+    }
+
+    public BinanceApiException(String errType, String errMsg, Integer errCode, Throwable e) {
+        super(errMsg, e);
+        this.errType = errType;
+        this.errCode = errCode;
     }
 
     public BinanceApiException(String errType, String errMsg, Throwable e) {
         super(errMsg, e);
-        this.errCode = errType;
+        this.errType = errType;
+        this.errCode = null;
     }
 
     public String getErrType() {
+        return this.errType;
+    }
+
+    public Integer getErrCode() {
         return this.errCode;
     }
 }
