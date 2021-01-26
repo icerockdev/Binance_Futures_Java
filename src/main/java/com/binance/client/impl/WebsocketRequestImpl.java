@@ -460,9 +460,10 @@ class WebsocketRequestImpl {
             UserDataUpdateEvent result = new UserDataUpdateEvent();
             result.setEventType(jsonWrapper.getString("e"));
             result.setEventTime(jsonWrapper.getLong("E"));
-            result.setTransactionTime(jsonWrapper.getLong("T"));
 
             if(jsonWrapper.getString("e").equals("ACCOUNT_UPDATE")) {
+                result.setTransactionTime(jsonWrapper.getLong("T"));
+
                 AccountUpdate accountUpdate = new AccountUpdate();
 
                 List<BalanceUpdate> balanceList = new LinkedList<>();
@@ -491,6 +492,8 @@ class WebsocketRequestImpl {
                 result.setAccountUpdate(accountUpdate); 
 
             } else if(jsonWrapper.getString("e").equals("ORDER_TRADE_UPDATE")) {
+                result.setTransactionTime(jsonWrapper.getLong("T"));
+
                 OrderUpdate orderUpdate = new OrderUpdate();
                 JsonWrapper jsondata = jsonWrapper.getJsonObject("o");
                 orderUpdate.setSymbol(jsondata.getString("s"));
